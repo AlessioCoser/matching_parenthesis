@@ -1,0 +1,19 @@
+{
+  "name": "parenthesis",
+  "version": "0.0.1",
+  "author": "Alessio Coser <alessio.coser@xpeppers.com>",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha check_parenthesis_test.js"
+  },
+  "main": "check_parenthesis.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AlessioCoser/parenthesis"
+  },
+  "dependencies": {
+    "mocha": "*",
+    "chai": "*",
+    "to-iso-string": "*"
+  }
+}
+
