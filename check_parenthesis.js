@@ -1,7 +1,3 @@
-module.exports = {
-  check
-};
-
 class Parenthesis {
   constructor(open, close) {
     this._open = open;
@@ -35,9 +31,13 @@ class Parenthesis {
   isEmpty() {
     return this._track.length === 0
   }
+
+  clear() {
+    this._track = [];
+  }
 }
 
-class ParentesisSet {
+class ParenthesisSet {
   constructor(...parenthesis) {
     this.parenthesis = parenthesis;
   }
@@ -68,25 +68,30 @@ class ParentesisSet {
       return curr.isEmpty() && acc
     },true);
   }
+
+  clear(){
+    this.parenthesis.map((par) => {
+      par.clear();
+    });
+  }
+
+  checkString(string) {
+    var chars = string.split('');
+    for(let index = 0; index < chars.length; index++) {
+      var openPars = this.getOpenParenthesis(chars[index], index);
+      if(openPars.length > 0) {
+        openPars[0].push(index);
+      }
+      var closePars = this.getCloseParenthesis(chars[index]);
+      if((closePars.length > 0) && this.isGreatestIndex(closePars[0].last())) {
+        closePars[0].pop();
+      }
+    }
+    return this.isAllClosed();
+  }
 }
 
-function check(string) {
-  var chars = string.split('');
-  var parenthesisSet = new ParentesisSet(
-    new Parenthesis('(', ')'),
-    new Parenthesis('[', ']'),
-    new Parenthesis('{', '}')
-  );
-
-  for(let index = 0; index < chars.length; index++) {
-    var openPars = parenthesisSet.getOpenParenthesis(chars[index], index);
-    if(openPars.length > 0) {
-      openPars[0].push(index);
-    }
-    var closePars = parenthesisSet.getCloseParenthesis(chars[index]);
-    if((closePars.length > 0) && parenthesisSet.isGreatestIndex(closePars[0].last())) {
-      closePars[0].pop();
-    }
-  }
-  return parenthesisSet.isAllClosed();
+module.exports = {
+  ParenthesisSet,
+  Parenthesis
 }
