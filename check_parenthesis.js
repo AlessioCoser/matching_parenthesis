@@ -32,17 +32,23 @@ class Parenthesis {
 
 function check(string) {
   var chars = string.split('');
-  var par = new Parenthesis('(', ')');
+  var par = [
+    new Parenthesis('(', ')'),
+    new Parenthesis('[', ']'),
+  ];
 
   for(var index=0; index<chars.length; index++) {
     var char = chars[index];
-    if(par.isOpen(char)) {
-      par.push(index);
-    }
-    if(par.isClose(char)) {
-      par.pop();
+    for(var p=0; p < par.length; p++) {
+      var parent = par[p];
+      if(parent.isOpen(char)) {
+        parent.push(index);
+      }
+      if(parent.isClose(char)) {
+        parent.pop();
+      }
     }
   }
 
-  return par.isEmpty()
+  return par.reduce((acc, curr) => !curr.isEmpty() || !acc,true);
 }

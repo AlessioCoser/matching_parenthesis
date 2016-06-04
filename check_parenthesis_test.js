@@ -15,4 +15,7 @@ describe('Check parenthesis', function() {
   it('return true with "two ( parenthesis )"', function() {
     expect(parenthesis.check("two ( parenthesis )")).to.equal(true);
   });
+  it('return true with "two [ type ] of ( parenthesis )"', function() {
+    expect(parenthesis.check("two [ type ] of ( parenthesis )")).to.equal(true);
+  });
 });
