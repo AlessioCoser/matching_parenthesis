@@ -9,4 +9,10 @@ describe('Check parenthesis', function() {
   it('return true with "no parenthesis"', function() {
     expect(parenthesis.check("no parenthesis")).to.equal(true);
   });
+  it('return false with "one ( parenthesis"', function() {
+    expect(parenthesis.check("one ( parenthesis")).to.equal(false);
+  });
+  it('return true with "two ( parenthesis )"', function() {
+    expect(parenthesis.check("two ( parenthesis )")).to.equal(true);
+  });
 });
