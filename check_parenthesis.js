@@ -37,36 +37,56 @@ class Parenthesis {
   }
 }
 
-function isLastOpened(par, index) {
-  return par.reduce((acc, curr) => {
-    if(acc != false) {
-      return (curr.last() <= index)
-    }
-    return false;
-  },true);
+class ParentesisSet {
+  constructor(...parenthesis) {
+    this.parenthesis = parenthesis;
+  }
+
+  getOpenParenthesis(char, index) {
+    return this.parenthesis.filter((curr) => {
+      return curr.isOpen(char);
+    });
+  }
+
+  getCloseParenthesis(char) {
+    return this.parenthesis.filter((curr) => {
+      return curr.isClose(char);
+    });
+  }
+
+  isGreatestIndex(index) {
+    return this.parenthesis.reduce((acc, curr) => {
+      if(acc === true) {
+        return (curr.last() <= index)
+      }
+      return acc;
+    },true);
+  }
+
+  isAllClosed() {
+    return this.parenthesis.reduce((acc, curr) => {
+      return curr.isEmpty() && acc
+    },true);
+  }
 }
 
 function check(string) {
   var chars = string.split('');
-  var par = [
+  var parenthesisSet = new ParentesisSet(
     new Parenthesis('(', ')'),
     new Parenthesis('[', ']'),
-  ];
+    new Parenthesis('{', '}')
+  );
 
-  for(var index=0; index<chars.length; index++) {
-    var char = chars[index];
-    for(var p=0; p < par.length; p++) {
-      var parent = par[p];
-      if(parent.isOpen(char)) {
-        parent.push(index);
-      }
-      if(parent.isClose(char)) {
-        if(!isLastOpened(par, parent.last()))
-          return false;
-        parent.pop();
-      }
+  for(let index = 0; index < chars.length; index++) {
+    var openPars = parenthesisSet.getOpenParenthesis(chars[index], index);
+    if(openPars.length > 0) {
+      openPars[0].push(index);
+    }
+    var closePars = parenthesisSet.getCloseParenthesis(chars[index]);
+    if((closePars.length > 0) && parenthesisSet.isGreatestIndex(closePars[0].last())) {
+      closePars[0].pop();
     }
   }
-
-  return par.reduce((acc, curr) => !curr.isEmpty() || !acc,true);
+  return parenthesisSet.isAllClosed();
 }

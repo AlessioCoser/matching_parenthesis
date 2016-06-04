@@ -21,4 +21,10 @@ describe('Check parenthesis', function() {
   it('return false with "[ crossing ( ] parenthesis )"', function() {
     expect(parenthesis.check("[ crossing ( ] parenthesis )")).to.equal(false);
   });
+  it('return true with "[ {three} ( type ) of ] ( parenthesis )"', function() {
+    expect(parenthesis.check("[ {three} ( type ) of ] ( parenthesis )")).to.equal(true);
+  });
+  it('return false with "[ {three} ( type ) of ( ] parenthesis )"', function() {
+    expect(parenthesis.check("[ {three} ( type ) of ( ] parenthesis )")).to.equal(false);
+  });
 });
