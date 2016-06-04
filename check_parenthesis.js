@@ -17,6 +17,13 @@ class Parenthesis {
     return close === this._close;
   }
 
+  last() {
+    if(this.isEmpty())
+      return -1;
+
+    return this._track[this._track.length-1];
+  }
+
   push(index) {
     this._track.push(index);
   }
@@ -28,6 +35,15 @@ class Parenthesis {
   isEmpty() {
     return this._track.length === 0
   }
+}
+
+function isLastOpened(par, index) {
+  return par.reduce((acc, curr) => {
+    if(acc != false) {
+      return (curr.last() <= index)
+    }
+    return false;
+  },true);
 }
 
 function check(string) {
@@ -45,6 +61,8 @@ function check(string) {
         parent.push(index);
       }
       if(parent.isClose(char)) {
+        if(!isLastOpened(par, parent.last()))
+          return false;
         parent.pop();
       }
     }

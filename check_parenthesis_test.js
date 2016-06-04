@@ -18,4 +18,7 @@ describe('Check parenthesis', function() {
   it('return true with "two [ type ] of ( parenthesis )"', function() {
     expect(parenthesis.check("two [ type ] of ( parenthesis )")).to.equal(true);
   });
+  it('return false with "[ crossing ( ] parenthesis )"', function() {
+    expect(parenthesis.check("[ crossing ( ] parenthesis )")).to.equal(false);
+  });
 });
