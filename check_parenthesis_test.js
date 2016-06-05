@@ -1,9 +1,9 @@
 var chai = require('chai');
 var expect = chai.expect;
 var Parenthesis = require("./check_parenthesis").Parenthesis;
-var ParentesisSet = require("./check_parenthesis").ParenthesisSet;
+var ParenthesisSet = require("./check_parenthesis").ParenthesisSet;
 
-const PARENTHESIS_SET = new ParentesisSet(
+const PARENTHESIS_SET = new ParenthesisSet(
   new Parenthesis('(', ')'),
   new Parenthesis('[', ']'),
   new Parenthesis('{', '}')
@@ -22,6 +22,9 @@ describe('Check parenthesis', () => {
   });
   it('return false with "one ( parenthesis"', () => {
     expect(PARENTHESIS_SET.checkString("one ( parenthesis")).to.equal(false);
+  });
+  it('return false with "one ) closed parenthesis"', () => {
+    expect(PARENTHESIS_SET.checkString("one ) closed parenthesis")).to.equal(false);
   });
   it('return true with "two ( parenthesis )"', () => {
     expect(PARENTHESIS_SET.checkString("two ( parenthesis )")).to.equal(true);

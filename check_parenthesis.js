@@ -15,7 +15,7 @@ class Parenthesis {
 
   last() {
     if(this.isEmpty())
-      return -1;
+      return false;
 
     return this._track[this._track.length-1];
   }
@@ -65,6 +65,10 @@ class ParenthesisSet {
   }
 
   _isGreatestIndex(index) {
+    if(index === false) {
+      return false;
+    }
+
     return this.parenthesis.reduce((acc, curr) => {
       if(acc === true) {
         return (curr.last() <= index)
