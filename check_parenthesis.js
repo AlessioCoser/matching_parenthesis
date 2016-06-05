@@ -83,8 +83,12 @@ class ParenthesisSet {
         openPars[0].push(index);
       }
       var closePars = this.getCloseParenthesis(chars[index]);
-      if((closePars.length > 0) && this.isGreatestIndex(closePars[0].last())) {
-        closePars[0].pop();
+      if((closePars.length > 0)) {
+        if(this.isGreatestIndex(closePars[0].last())) {
+          closePars[0].pop();
+        }else {
+          return false;
+        }
       }
     }
     return this.isAllClosed();
