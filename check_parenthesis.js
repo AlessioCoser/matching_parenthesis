@@ -42,19 +42,29 @@ class ParenthesisSet {
     this.parenthesis = parenthesis;
   }
 
-  getOpenParenthesis(char, index) {
-    return this.parenthesis.filter((curr) => {
+  _getOpenParenthesis(char, index) {
+    var parenthesis = this.parenthesis.filter((curr) => {
       return curr.isOpen(char);
     });
+
+    if(parenthesis.length > 0) {
+      return parenthesis[0];
+    }
+    return false;
   }
 
-  getCloseParenthesis(char) {
-    return this.parenthesis.filter((curr) => {
+  _getCloseParenthesis(char) {
+    var parenthesis = this.parenthesis.filter((curr) => {
       return curr.isClose(char);
     });
+
+    if(parenthesis.length > 0) {
+      return parenthesis[0];
+    }
+    return false;
   }
 
-  isGreatestIndex(index) {
+  _isGreatestIndex(index) {
     return this.parenthesis.reduce((acc, curr) => {
       if(acc === true) {
         return (curr.last() <= index)
@@ -63,7 +73,7 @@ class ParenthesisSet {
     },true);
   }
 
-  isAllClosed() {
+  _isAllClosed() {
     return this.parenthesis.reduce((acc, curr) => {
       return curr.isEmpty() && acc
     },true);
@@ -78,20 +88,20 @@ class ParenthesisSet {
   checkString(string) {
     var chars = string.split('');
     for(let index = 0; index < chars.length; index++) {
-      var openPars = this.getOpenParenthesis(chars[index], index);
-      if(openPars.length > 0) {
-        openPars[0].push(index);
+      var open = this._getOpenParenthesis(chars[index], index);
+      if(open) {
+        open.push(index);
       }
-      var closePars = this.getCloseParenthesis(chars[index]);
-      if((closePars.length > 0)) {
-        if(this.isGreatestIndex(closePars[0].last())) {
-          closePars[0].pop();
-        }else {
+
+      var close = this._getCloseParenthesis(chars[index]);
+      if(close) {
+        if(!this._isGreatestIndex(close.last())) {
           return false;
         }
+        close.pop();
       }
     }
-    return this.isAllClosed();
+    return this._isAllClosed();
   }
 }
 
